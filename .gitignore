@@ -32,3 +32,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+BlockKuzushi/Assets/Plugins/
+BlockKuzushi/Assets/Plugins.meta
