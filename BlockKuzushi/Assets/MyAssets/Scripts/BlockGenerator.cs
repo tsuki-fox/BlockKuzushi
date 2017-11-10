@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UniRx;
+using System;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -10,40 +12,42 @@ public class BlockGenerator : MonoBehaviour
 {
 	[SerializeField]
 	GameObject _source;
-	[SerializeField]
-	Vector3 _pos;
-	[SerializeField]
-	float _initialAngle;
-	[SerializeField]
-	float _radius;
-	[SerializeField]
-	int count;
-	[SerializeField,Range(0f,1f)]
-	float missing;
 
-	public static void GenerateInRing(GameObject source, Vector3 pos, float initialAngle,float radius, int count, float missing)
+	[SerializeField]
+	List<Transform> _spawnPoints;
+	public List<Transform> spawnPoints
 	{
-		float angle = initialAngle;
-		for (int f1 = 0; f1 < count; f1++)
+		get { return _spawnPoints; }
+		set { _spawnPoints = value; }
+	}
+
+	[SerializeField]
+	float _interval;
+
+	public void Generate()
+	{
+		foreach (var item in _spawnPoints)
 		{
-			if (Random.Range(0f, 1f) < missing)
-			{
-				angle += 360f / count;
-				continue;
-			}
+			var obj = Instantiate(_source);
 
-			var obj = Instantiate(source);
-
-			var objPos = pos;
-			objPos.x += Mathf.Cos(angle * Mathf.Deg2Rad) * radius;
-			objPos.y += Mathf.Sin(angle * Mathf.Deg2Rad) * radius;
-
-			obj.transform.position = objPos;
-			obj.transform.SetRotZ(angle - 90f);
-
-			angle += 360f / count;
+			obj.transform.position = item.position;
 		}
 	}
+
+	public void GraduallyGenerate(float interval)
+	{
+		int cnt = 0;
+		foreach(var item in _spawnPoints)
+		{
+			Observable.Timer(TimeSpan.FromMilliseconds(cnt * interval)).Subscribe(e =>
+			{
+				var obj = Instantiate(_source);
+				obj.transform.position = item.position;
+			}).AddTo(this);
+			cnt++;
+		}
+	}
+
 #if UNITY_EDITOR
 	[CustomEditor(typeof(BlockGenerator))]
 	public class BlockGeneratorInspector : Editor
@@ -56,7 +60,11 @@ public class BlockGenerator : MonoBehaviour
 
 			if(GUILayout.Button("Generate"))
 			{
-				BlockGenerator.GenerateInRing(param._source, param._pos, param._initialAngle, param._radius, param.count, param.missing);
+				param.Generate();
+			}
+			if(GUILayout.Button("Generate2"))
+			{
+				param.GraduallyGenerate(param._interval);
 			}
 		}
 	}

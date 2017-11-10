@@ -53,6 +53,7 @@ public static class MessageVisualizer
 		{
 			Rect rect = new Rect(item.pos, new Vector2(100f, 25f));
 			GUI.Label(rect, item.text);
+			GUI.Box(rect, "");
 		}
 	}
 
