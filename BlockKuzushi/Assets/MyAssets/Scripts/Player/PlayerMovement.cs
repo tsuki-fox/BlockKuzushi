@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
 	[SerializeField]
 	float _moveSpeed;
 
-	private void Update()
+	Rigidbody2D _body;
+
+	private void Awake()
+	{
+		_body = GetComponent<Rigidbody2D>();
+	}
+
+	private void FixedUpdate()
 	{
 		//移動の処理
 		Vector3 delta = new Vector3();
@@ -19,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 			delta.x -= _moveSpeed;
 		if(MyInput.right)
 			delta.x += _moveSpeed;
-		transform.position += delta * Time.deltaTime;
+
+		_body.velocity = delta;
 	}
 }
