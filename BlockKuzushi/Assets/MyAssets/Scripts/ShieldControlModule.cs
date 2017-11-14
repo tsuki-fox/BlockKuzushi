@@ -25,6 +25,6 @@ public class ShieldControlModule : MonoBehaviour
 		pos.y = Mathf.Sin(angle) * _distance;
 
 		_target.transform.position = pos;
-		_target.transform.SetRotZ(angleDeg - 90f);
+		_target.transform.SetEulerAnglesZ(angleDeg - 90f);
 	}
 }

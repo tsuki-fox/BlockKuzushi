@@ -35,8 +35,20 @@ public static class MessageVisualizer
 		msg.pos = Camera.main.WorldToScreenPoint(pos);
 		msg.pos.y = Screen.height - msg.pos.y;
 		msg.elapsed = 0f;
-
 		_messages.Add(msg);
+	}
+
+	public static void Write(string text,MonoBehaviour mono)
+	{
+		Write(text, mono.transform.position);
+	}
+	public static void Write(string text,GameObject obj)
+	{
+		Write(text, obj.transform.position);
+	}
+	public static void Write(string text,Transform transform)
+	{
+		Write(text, transform.position);
 	}
 
 	public static void Update(float delta)

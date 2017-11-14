@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using System.Linq;
 using DG.Tweening;
 
 public class PlayerTest : MonoBehaviour
@@ -24,27 +25,55 @@ public class PlayerTest : MonoBehaviour
 		_blockers = transform.Find("Blockers").gameObject;
 
 		GetComponent<CollisionObserver>().Subscribe();
-		GetComponent<CollisionObserver>().AddHandlerCollisionEnter2DAll(col =>
+		/*
+		GetComponent<CollisionObserver>().AddHandlerCollisionEnter2DAll((self,col) =>
 		{
 			MessageVisualizer.Write("hit!", col.transform.position);
 			col.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
 			col.gameObject.GetComponentInChildren<TrailRenderer>().startColor = Color.white;
 			col.gameObject.GetComponentInChildren<TrailRenderer>().endColor = Color.white;
 			col.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
-			foreach (Transform item in col.gameObject.transform)
-				item.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
+			col.gameObject.SetChildrenLayer(LayerMask.NameToLayer("PlayerBullet"));
 
-
-			var particle = Instantiate(_particle);
-			particle.transform.position = col.contacts[0].point;
-
-			Observable.Timer(System.TimeSpan.FromSeconds(3)).Subscribe(t =>
+			if (col.contacts.Count() > 0)
 			{
-				Destroy(particle.gameObject);
-			}).AddTo(particle);
+				var particle = Instantiate(_particle);
+				particle.transform.position = col.contacts[0].point;
 
-			Camera.main.transform.DOComplete();
-			Camera.main.transform.DOShakePosition(0.1f, 0.2f);
+				Observable.Timer(System.TimeSpan.FromSeconds(3)).Subscribe(t =>
+				{
+					Destroy(particle.gameObject);
+				}).AddTo(particle);
+			}
+		});
+		*/
+
+		GameEvents.onConvertEnemyBullet += (playerBlocker, enemyBullet) =>
+		  {
+			  MessageVisualizer.Write("hit!", enemyBullet.transform.position);
+			  enemyBullet.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
+			  enemyBullet.gameObject.GetComponentInChildren<TrailRenderer>().startColor = Color.white;
+			  enemyBullet.gameObject.GetComponentInChildren<TrailRenderer>().endColor = Color.white;
+			  enemyBullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
+			  enemyBullet.gameObject.SetChildrenLayer(LayerMask.NameToLayer("PlayerBullet"));
+
+			  /*
+			  if (col.contacts.Count() > 0)
+			  {
+				  var particle = Instantiate(_particle);
+				  particle.transform.position = col.contacts[0].point;
+
+				  Observable.Timer(System.TimeSpan.FromSeconds(3)).Subscribe(t =>
+				  {
+					  Destroy(particle.gameObject);
+				  }).AddTo(particle);
+			  }
+			  */
+		  };
+
+		GetComponent<CollisionObserver>().AddHandlerCollisionEnter2DAll((self, col) =>
+		{
+			GameEvents.TriggerConvertEnemyBullet(self, col.gameObject);
 		});
 	}
 	

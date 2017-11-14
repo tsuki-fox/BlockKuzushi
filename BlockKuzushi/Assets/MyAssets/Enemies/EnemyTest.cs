@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
+using DG.Tweening;
 
 public class EnemyTest : MonoBehaviour
 {
@@ -32,5 +33,14 @@ public class EnemyTest : MonoBehaviour
 		}
 
 		GetComponent<CollisionObserver>().Subscribe();
+		GetComponent<CollisionObserver>().AddHandlerCollisionEnter2DAll((self,col)=>
+		{
+			if (col.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+			{
+				Camera.main.transform.DOComplete();
+				Camera.main.transform.DOShakePosition(0.1f, 0.2f);
+				Destroy(self);
+			}
+		});
 	}
 }

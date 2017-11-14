@@ -56,6 +56,6 @@ public class BarController : MonoBehaviour
 		_body.velocity = vel;
 
 		if (inpA)
-			transform.SetRotZ(transform.eulerAngles.z + 5f);
+			transform.SetEulerAnglesZ(transform.eulerAngles.z + 5f);
 	}
 }

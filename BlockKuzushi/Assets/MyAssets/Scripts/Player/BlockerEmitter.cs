@@ -43,7 +43,6 @@ public class BlockerEmitter : MonoBehaviour
 
 		//親子の設定
 		go.transform.SetParent(_parent.transform, false);
-
 		return go;
 	}
 }
