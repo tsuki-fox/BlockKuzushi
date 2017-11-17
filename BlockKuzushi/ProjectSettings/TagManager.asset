@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ball
-  - SpawnPoint
   - Enemy
-  - Bullet
+  - PlayerBullet
+  - PlayerBlock
+  - EnemyBlock
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
@@ -21,8 +22,8 @@ TagManager:
   - Enemy
   - EnemyBullet
   - PlayerBullet
-  - EnemyBlocker
-  - PlayerBlocker
+  - EnemyBlock
+  - PlayerBlock
   - 
   - 
   - 

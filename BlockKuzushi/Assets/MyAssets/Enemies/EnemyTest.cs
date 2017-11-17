@@ -29,7 +29,7 @@ public class EnemyTest : MonoBehaviour
 		for (int i = 0; i < 8; i++)
 		{
 			var obj = emitter.Emit(i / 8f * 360f, 30f, 1f, 0.3f);
-			obj.layer = LayerMask.NameToLayer("EnemyBlocker");
+			obj.layer = LayerMask.NameToLayer("EnemyBlock");
 		}
 
 		GetComponent<CollisionObserver>().Subscribe();

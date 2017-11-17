@@ -26,7 +26,7 @@ public class PlayerTest : MonoBehaviour
 
 		GetComponent<CollisionObserver>().Subscribe();
 
-		GameEvents.Collisions.AddHandler(GameEvents.Declares.CollisionTiming.Enter, "pblocker", "ebullet", (playerBlocker, enemyBullet, collision) =>
+		GameEvents.Collisions.Subscribe(GameEvents.Declares.CollisionTiming.Enter, TagName.PlayerBlock,TagName.EnemyBullet, (playerBlocker, enemyBullet, collision) =>
 		{
 			MessageVisualizer.Write("hit!", enemyBullet.transform.position);
 			enemyBullet.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
@@ -48,7 +48,7 @@ public class PlayerTest : MonoBehaviour
 
 		GetComponent<CollisionObserver>().AddHandlerCollisionEnter2DAll((self, col) =>
 		{
-			GameEvents.Collisions.Ignition(GameEvents.Declares.CollisionTiming.Enter,"pblocker","ebullet", self, col.gameObject, col);
+			GameEvents.Collisions.Notify(GameEvents.Declares.CollisionTiming.Enter, TagName.PlayerBlock, TagName.EnemyBullet, self, col.gameObject, col);
 		});
 	}
 	
