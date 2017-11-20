@@ -107,22 +107,22 @@ namespace GameEvents
 
 	public static class Destroies
 	{
-		static Dictionary<string, Declares.OnDestroyHandler> _handlers 
-			= new Dictionary<string, Declares.OnDestroyHandler>();
+		static Dictionary<TagName, Declares.OnDestroyHandler> _handlers 
+			= new Dictionary<TagName, Declares.OnDestroyHandler>();
 
-		public static void Subscribe(string name,Declares.OnDestroyHandler handler)
+		public static void Subscribe(TagName name,Declares.OnDestroyHandler handler)
 		{
 			if (_handlers.ContainsKey(name))
 				_handlers[name] += handler;
 			else
 				_handlers.Add(name, handler);
 		}
-		public static void Unsubscribe(string name, Declares.OnDestroyHandler handler)
+		public static void Unsubscribe(TagName name, Declares.OnDestroyHandler handler)
 		{
 			if (_handlers.ContainsKey(name))
 				_handlers[name] -= handler;
 		}
-		public static void Notify(string name, GameObject self)
+		public static void Notify(TagName name, GameObject self)
 		{
 			if (_handlers.ContainsKey(name))
 				_handlers[name](self);

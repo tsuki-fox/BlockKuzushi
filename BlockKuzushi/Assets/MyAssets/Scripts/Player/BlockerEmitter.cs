@@ -11,12 +11,13 @@ public class BlockerEmitter : MonoBehaviour
 	[SerializeField]
 	int _division = 8;
 
+	[SerializeField]
 	GameObject _src;
 	GameObject _parent;
 
 	private void Awake()
 	{
-		_src = (GameObject)Resources.Load("Prefabs/Blocker");
+		//_src = (GameObject)Resources.Load("Prefabs/Blocker");
 
 		//親オブジェクト生成
 		_parent = new GameObject("Blockers");

@@ -17,28 +17,13 @@ public class BulletMovement : MonoBehaviour
 		set { _body.velocity = value; }
 	}
 
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-		if (gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
-		{
-			if(collision.gameObject.layer==LayerMask.NameToLayer("Enemy"))
-			{
-				var particle=Instantiate(_particle);
-				particle.transform.position = transform.position;
-				Destroy(particle.gameObject, 3f);
-				Destroy(gameObject);
-				MessageVisualizer.Write("hit!", this);
-			}
-		}
-	}
-
 	private void Awake()
 	{
 		_body = GetComponent<Rigidbody2D>();
 
 		Observable.Timer(System.TimeSpan.FromSeconds(4)).Subscribe(_ =>
 		{
-			MessageVisualizer.Write("anni", transform.position);
+			MessageVisualizer.Write("anni", transform.position, Color.black);
 			Destroy(gameObject);
 		}).AddTo(this);
 	}

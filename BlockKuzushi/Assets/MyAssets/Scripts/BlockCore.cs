@@ -14,6 +14,7 @@ public class BlockCore : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
+		/*
 		MessageVisualizer.Write("HIT", transform.position);
 
 		if(collision.gameObject.tag=="Ball")
@@ -26,6 +27,7 @@ public class BlockCore : MonoBehaviour
 			Destroy(ps.gameObject, 5f);
 			Destroy(gameObject);
 		}
+		*/
 	}
 
 	// Use this for initialization

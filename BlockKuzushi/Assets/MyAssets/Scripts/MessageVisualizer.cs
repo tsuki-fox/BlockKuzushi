@@ -10,6 +10,7 @@ public static class MessageVisualizer
 		public string text;
 		public Vector2 pos;
 		public float elapsed;
+		public Color color;
 	}
 
 	static List<Message> _messages = new List<Message>();
@@ -25,7 +26,7 @@ public static class MessageVisualizer
 		GameObject.DontDestroyOnLoad(_instance);
 	}
 
-	public static void Write(string text,Vector2 pos)
+	public static void Write(string text,Vector2 pos,Color color)
 	{
 		if (_instance == null)
 			CreateInstance();
@@ -35,20 +36,21 @@ public static class MessageVisualizer
 		msg.pos = Camera.main.WorldToScreenPoint(pos);
 		msg.pos.y = Screen.height - msg.pos.y;
 		msg.elapsed = 0f;
+		msg.color = color;
 		_messages.Add(msg);
 	}
 
-	public static void Write(string text,MonoBehaviour mono)
+	public static void Write(string text,MonoBehaviour mono,Color color)
 	{
-		Write(text, mono.transform.position);
+		Write(text, mono.transform.position,color);
 	}
-	public static void Write(string text,GameObject obj)
+	public static void Write(string text,GameObject obj,Color color)
 	{
-		Write(text, obj.transform.position);
+		Write(text, obj.transform.position,color);
 	}
-	public static void Write(string text,Transform transform)
+	public static void Write(string text,Transform transform,Color color)
 	{
-		Write(text, transform.position);
+		Write(text, transform.position,color);
 	}
 
 	public static void Update(float delta)
@@ -65,7 +67,10 @@ public static class MessageVisualizer
 		{
 			Rect rect = new Rect(item.pos, new Vector2(100f, 25f));
 			GUI.Label(rect, item.text);
+			var temp = GUI.color;
+			GUI.color = item.color;
 			GUI.Box(rect, "");
+			GUI.color = temp;
 		}
 	}
 

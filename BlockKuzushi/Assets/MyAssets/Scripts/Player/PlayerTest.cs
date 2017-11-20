@@ -25,31 +25,6 @@ public class PlayerTest : MonoBehaviour
 		_blockers = transform.Find("Blockers").gameObject;
 
 		GetComponent<CollisionObserver>().Subscribe();
-
-		GameEvents.Collisions.Subscribe(GameEvents.Declares.CollisionTiming.Enter, TagName.PlayerBlock,TagName.EnemyBullet, (playerBlocker, enemyBullet, collision) =>
-		{
-			MessageVisualizer.Write("hit!", enemyBullet.transform.position);
-			enemyBullet.gameObject.GetComponentInChildren<SpriteRenderer>().color = Color.white;
-			enemyBullet.gameObject.GetComponentInChildren<TrailRenderer>().startColor = Color.white;
-			enemyBullet.gameObject.GetComponentInChildren<TrailRenderer>().endColor = Color.white;
-			enemyBullet.gameObject.layer = LayerMask.NameToLayer("PlayerBullet");
-			enemyBullet.gameObject.SetChildrenLayer(LayerMask.NameToLayer("PlayerBullet"));
-			if (collision.contacts.Count() > 0)
-			{
-				var particle = Instantiate(_particle);
-				particle.transform.position = collision.contacts[0].point;
-
-				Observable.Timer(System.TimeSpan.FromSeconds(3)).Subscribe(t =>
-				{
-					Destroy(particle.gameObject);
-				}).AddTo(particle);
-			}
-		});
-
-		GetComponent<CollisionObserver>().AddHandlerCollisionEnter2DAll((self, col) =>
-		{
-			GameEvents.Collisions.Notify(GameEvents.Declares.CollisionTiming.Enter, TagName.PlayerBlock, TagName.EnemyBullet, self, col.gameObject, col);
-		});
 	}
 	
 	// Update is called once per frame
