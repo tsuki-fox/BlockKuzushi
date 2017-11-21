@@ -5,24 +5,29 @@ using System;
 
 public static class GameObjectEx
 {
-	public static void SetChildrenLayer(this GameObject src, int layer, bool containSelf = true)
+	public static void SetChildrenLayer(this GameObject self, int layer, bool containSelf = true)
 	{
 		if (containSelf)
-			src.layer = layer;
-		foreach (Transform item in src.transform)
+			self.layer = layer;
+		foreach (Transform item in self.transform)
 			item.gameObject.layer = layer;
 	}
 
-	public static void SetChildrenTag(this GameObject src,TagName tag,bool containSelf=true)
+	public static void SetChildrenTag(this GameObject self,TagName tag,bool containSelf=true)
 	{
 		if (containSelf)
-			src.tag = tag.ToString();
-		foreach (Transform item in src.transform)
+			self.tag = tag.ToString();
+		foreach (Transform item in self.transform)
 			item.gameObject.tag = tag.ToString();
 	}
 
-	public static TagName GetEnumTagName(this GameObject src)
+	public static TagName GetEnumTagName(this GameObject self)
 	{
-		return (TagName)Enum.Parse(typeof(TagName), src.tag);
+		return (TagName)Enum.Parse(typeof(TagName), self.tag);
+	}
+
+	public static bool HasComponent<T>(this GameObject self)where T:Component
+	{
+		return self.GetComponent<T>() != null;
 	}
 }

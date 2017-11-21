@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 114545452146848332}
   - component: {fileID: 23978877432022702}
   - component: {fileID: 114584139276636942}
+  - component: {fileID: 114890636195004504}
+  - component: {fileID: 50476499357175030}
   m_Layer: 12
   m_Name: EnemyBlock
   m_TagString: EnemyBlock
@@ -84,6 +86,26 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1891311779658912}
   m_Mesh: {fileID: 0}
+--- !u!50 &50476499357175030
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1891311779658912}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!114 &114545452146848332
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,3 +132,15 @@ MonoBehaviour:
   _stay: 
   _exit: 
   deathNotifiable: 1
+--- !u!114 &114890636195004504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1891311779658912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d181a42d103d824394109519d243261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxDurability: 8

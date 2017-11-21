@@ -32,6 +32,6 @@ public class EnemyTest : MonoBehaviour
 			obj.layer = LayerMask.NameToLayer("EnemyBlock");
 		}
 
-		GetComponent<CollisionObserver>().Subscribe();
+		//GetComponent<CollisionObserver>().Subscribe();
 	}
 }
