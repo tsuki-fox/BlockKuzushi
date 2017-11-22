@@ -34,4 +34,9 @@ public class EnemyTest : MonoBehaviour
 
 		//GetComponent<CollisionObserver>().Subscribe();
 	}
+
+	private void Update()
+	{
+		transform.AddEulerAnglesZ(45f * Time.deltaTime);
+	}
 }

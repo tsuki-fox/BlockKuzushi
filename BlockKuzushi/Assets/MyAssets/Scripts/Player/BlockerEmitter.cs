@@ -24,7 +24,7 @@ public class BlockerEmitter : MonoBehaviour
 		_parent.transform.SetParent(transform, false);
 	}
 
-	public GameObject Emit(float angle,float size,float radius,float thickness)
+	public GameObject Emit(float angle, float size, float radius, float thickness)
 	{
 		//オブジェクト生成
 		var go = Instantiate(_src);
@@ -33,7 +33,7 @@ public class BlockerEmitter : MonoBehaviour
 		go.transform.position = Vector3.zero;
 
 		//メッシュ+コライダーの生成
-		float begin = angle + size/2f;
+		float begin = angle + size / 2f;
 		float end = angle - size / 2f;
 		float inner = radius - thickness / 2f;
 		float outer = radius + thickness / 2f;
