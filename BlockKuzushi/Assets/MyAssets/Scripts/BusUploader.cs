@@ -5,11 +5,11 @@ using System;
 
 public class BusUploader : MonoBehaviour
 {
-	[SerializeField]
+	[SerializeField,Header("衝突開始時")]
 	List<TagName> _enter;
-	[SerializeField]
+	[SerializeField,Header("衝突中")]
 	List<TagName> _stay;
-	[SerializeField]
+	[SerializeField,Header("衝突終了時")]
 	List<TagName> _exit;
 	[SerializeField]
 	bool deathNotifiable = true;

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class BlockerEmitter : MonoBehaviour
 {
-	[SerializeField]
+	[SerializeField,Header("マテリアル")]
 	Material _material;
-	[SerializeField]
+	[SerializeField,Header("物理マテリアル")]
 	PhysicsMaterial2D _phyMaterial;
-	[SerializeField]
+	[SerializeField,Header("メッシュ分割数")]
 	int _division = 8;
 
-	[SerializeField]
+	[SerializeField,Header("ソースプレハブ")]
 	GameObject _src;
 	GameObject _parent;
 

@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4610462961365464}
   - component: {fileID: 50805978200301620}
-  - component: {fileID: 114535981388900228}
   - component: {fileID: 114162102071292868}
   m_Layer: 11
   m_Name: PlayerBullet
@@ -215,19 +214,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _upper: 20
   _lower: 10
---- !u!114 &114535981388900228
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1473720153140900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e9ebea77b3d494b9d16ff8586d438e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _particle: {fileID: 198520583448879886, guid: ead5682e83feb4d4486956d9b15e73ab,
-    type: 2}
 --- !u!212 &212088449536182566
 SpriteRenderer:
   m_ObjectHideFlags: 1

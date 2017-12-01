@@ -23,18 +23,5 @@ public class PlayerTest : MonoBehaviour
 		}
 
 		_blockers = transform.Find("Blockers").gameObject;
-
-		GetComponent<CollisionObserver>().Subscribe();
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		float delta = 0f;
-		if (MyInput.leftRot)
-			delta += 10f;
-		if (MyInput.rightRot)
-			delta -= 10f;
-		_blockers.transform.localEulerAngles += new Vector3(0f, 0f, delta);
 	}
 }

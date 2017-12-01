@@ -7,9 +7,9 @@ public class VelocityLimitter : MonoBehaviour
 {
 	Rigidbody2D _body;
 
-	[SerializeField]
+	[SerializeField,Header("速度上限")]
 	float _upper;
-	[SerializeField]
+	[SerializeField,Header("速度下限")]
 	float _lower;
 
 	private void Awake()

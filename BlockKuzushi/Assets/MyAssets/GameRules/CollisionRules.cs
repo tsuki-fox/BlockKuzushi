@@ -36,13 +36,6 @@ public class CollisionRules : MonoBehaviour
 	private void Awake()
 	{
 		_audioSource = GetComponent<AudioSource>();
-		Observable.Interval(System.TimeSpan.FromSeconds(2)).Subscribe(c =>
-		{
-			var enemy = Instantiate(_enemy);
-			enemy.transform.position = Camera.main.ScreenToWorldPoint(RandomEx.RangeVector3(Vector3.zero, new Vector3(Screen.width, Screen.height, 0f)));
-			enemy.transform.SetPositionZ(0);
-		}).AddTo(this.gameObject);
-
 		var go = gameObject;
 
 		//プレイヤーダメージイベント
@@ -71,6 +64,11 @@ public class CollisionRules : MonoBehaviour
 
 			//EBullet削除
 			Destroy(enemyBullet);
+
+			//PBlockダメージ処理
+			var damageable = playerBlocker.GetComponent<Damageable>();
+			if (damageable)
+				damageable.TakeDamage(10);
 
 			_audioSource.PlayOneShot(_reflection);
 
@@ -128,7 +126,7 @@ public class CollisionRules : MonoBehaviour
 
 			var pos = enemy.transform.position;
 
-			for(int i=0;i<enemy.transform.Find("Blockers").childCount;i++)
+			for(int i=0;i<enemy.transform.Find("Blocks").childCount;i++)
 			{
 				Observable.Timer(System.TimeSpan.FromSeconds(i * 0.1f)).Subscribe(t =>
 				{
