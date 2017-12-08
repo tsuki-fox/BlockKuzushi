@@ -70,7 +70,8 @@ public class BulletEmitter : MonoBehaviour
 				break;
 		}
 
-		var bullet = Instantiate(_sourceBullet);
+		//var bullet = Instantiate(_sourceBullet);
+		var bullet = ObjectPool.Borrow(_sourceBullet);
 		bullet.transform.position = transform.position + _offset.ToVector3();
 		bullet.GetComponent<Rigidbody2D>().velocity = _shotSpeed * direction;
 	}

@@ -11,6 +11,9 @@ public class PlayerControlledMover : MonoBehaviour
 
 	Rigidbody2D _rigidbody;
 
+	[Attachable]
+	Vector3 _pos;
+
 	void Awake()
 	{
 		_rigidbody = GetComponent<Rigidbody2D>();	
@@ -28,6 +31,8 @@ public class PlayerControlledMover : MonoBehaviour
 		if (MyInput.down)
 			velocity.y -= _moveSpeed;
 		_rigidbody.velocity = velocity;
+
+		_pos = transform.position;
 
 	}
 }

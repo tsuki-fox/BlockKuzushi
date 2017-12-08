@@ -12,6 +12,8 @@ public class CollisionRules : MonoBehaviour
 	[SerializeField]
 	GameObject _playerBulletSrc;
 	[SerializeField]
+	GameObject _enemyBulletSrc;
+	[SerializeField]
 	GameObject _enemy;
 	[SerializeField]
 	public AudioClip _sound;
@@ -35,6 +37,9 @@ public class CollisionRules : MonoBehaviour
 
 	private void Awake()
 	{
+		ObjectPool.Reserve(_playerBulletSrc, 100);
+		ObjectPool.Reserve(_enemyBulletSrc, 100);
+
 		_audioSource = GetComponent<AudioSource>();
 		var go = gameObject;
 
@@ -44,12 +49,12 @@ public class CollisionRules : MonoBehaviour
 			Camera.main.DOComplete();
 			Camera.main.DOShakePosition(0.4f, 1f, 5);
 			_audioSource.PlayOneShot(_damage);
-			_overlay.color = Color.red;
-			Observable.IntervalFrame(1).Subscribe(c =>
-			{
-				_overlay.color = new Color(_overlay.color.r, _overlay.color.g, _overlay.color.b,1-( c / 30f));
-			}).AddTo(this.gameObject);
-			Destroy(eBullet.gameObject);
+			//Destroy(eBullet.gameObject);
+			ObjectPool.Repay(eBullet);
+
+			var killable = player.GetComponent<Killable>();
+			if (killable != null)
+				killable.TakeDamage(10);
 		});
 
 		//敵弾変換イベント
@@ -58,12 +63,14 @@ public class CollisionRules : MonoBehaviour
 			MessageVisualizer.Write("hit!", enemyBullet.transform.position,Color.black);
 
 			//PBullet生成
-			var pBullet = Instantiate(_playerBulletSrc);
+			//var pBullet = Instantiate(_playerBulletSrc);
+			var pBullet = ObjectPool.Borrow(_playerBulletSrc);
 			pBullet.GetComponent<Rigidbody2D>().velocity = enemyBullet.GetComponent<Rigidbody2D>().velocity;
 			pBullet.transform.position = enemyBullet.transform.position;
 
 			//EBullet削除
-			Destroy(enemyBullet);
+			//Destroy(enemyBullet);
+			ObjectPool.Repay(enemyBullet);
 
 			//PBlockダメージ処理
 			var damageable = playerBlocker.GetComponent<Damageable>();
@@ -88,7 +95,8 @@ public class CollisionRules : MonoBehaviour
 			CreateParticle(pBullet.transform.position, 2f);
 
 			//PBullet削除
-			Destroy(pBullet);
+			//Destroy(pBullet);
+			ObjectPool.Repay(pBullet);
 		});
 
 		//敵ダメージイベント
@@ -104,7 +112,8 @@ public class CollisionRules : MonoBehaviour
 			CreateParticle(pBullet.transform.position, 2f);
 
 			//PBullet削除
-			Destroy(pBullet);
+			//Destroy(pBullet);
+			ObjectPool.Repay(pBullet);
 		});
 
 		//死亡時

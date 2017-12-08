@@ -7,15 +7,21 @@ public class Killable : MonoBehaviour
 {
 	public delegate void OnDamageHandler(Killable self);
 	public delegate void OnRecoveryHandler(Killable self);
+	public delegate void OnStraddle(Killable self);
 
 	/// <summary>ダメージイベント</summary>
 	public event OnDamageHandler onDamage = delegate { };
 	/// <summary>回復イベント</summary>
 	public event OnRecoveryHandler onRecovery = delegate { };
+	/// <summary>踏ん張りイベント</summary>
+	public event OnStraddle onStraddle = delegate { };
 
 	[SerializeField, Header("最大へルス")]
 	float _maxHealth = 100;
+	[Attachable]
 	float _health;
+	[SerializeField, Header("踏ん張り有効化")]
+	bool _straddleEnabled = false;
 
 	/// <summary>最大ヘルス</summary>
 	public float maxHealth
@@ -24,6 +30,7 @@ public class Killable : MonoBehaviour
 		set { _maxHealth = value; }
 	}
 	/// <summary>現在ヘルス</summary>
+	[SerializeField,Attachable]
 	public float health
 	{
 		get { return _health; }
@@ -42,7 +49,15 @@ public class Killable : MonoBehaviour
 		_health -= value;
 		onDamage(this);
 		if (_health <= 0)
-			Destroy(gameObject);
+		{
+			if (_straddleEnabled && _health > 1)
+			{
+				_health = 0.01f;
+				onStraddle(this);
+			}
+			else
+				Destroy(gameObject);
+		}
 	}
 
 	/// <summary>ヘルスを回復する</summary>
