@@ -1,0 +1,12 @@
+﻿オブジェクトの追加方法
+
+1.プロジェクトビューから適当なフォルダで,"右クリック->Create->ObjectPoolProfile"
+2.作成されたProfileのインスペクタから"Add Profile"ボタンを押して新規追加
+3.Prefabの入力欄にプールしたいオブジェクトのプレハブをアタッチ
+4.ReserveAmountでプールしたい量を入力
+5.あとは起動するだけで勝手にプールが生成される
+
+- プールからインスタンスを取得するときは'ObjectPool.Borrow(prefab)' , 解放するときは'ObjectPool.Repay(instance)'
+- コンポーネントスクリプトにOnRepay()関数を実装(override不要)することで、ObjectPool.Repay時に呼び出される(OnDestroy的な)
+- スクリプトからプールしたいときはObjectPool.Reserve(prefab,amount)を利用することが可能
+- Profileが複数ある場合、確保するインスタンスは全Profileの合算値になる

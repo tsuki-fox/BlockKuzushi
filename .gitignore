@@ -39,5 +39,5 @@ sysinfo.txt
 *.unitypackage
 
 # Ignore third-party assets
-Assets/
-!Assets/MyAssets
+/BlockKuzushi/Assets/*
+!/BlockKuzushi/Assets/MyAssets
