@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UniRx;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class CollisionRules : MonoBehaviour
 {
@@ -147,5 +148,11 @@ public class CollisionRules : MonoBehaviour
 				}).AddTo(this.gameObject);
 			}
 		});
+	}
+
+	void OnApplicationQuit()
+	{
+		GameEvents.Collisions.Clean();
+		GameEvents.Destroies.Clean();
 	}
 }

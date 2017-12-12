@@ -30,4 +30,18 @@ public static class GameObjectEx
 	{
 		return self.GetComponent<T>() != null;
 	}
+
+	public static bool IsChild(this GameObject self,GameObject obj)
+	{
+		var current = obj.transform;
+		while(current!=self)
+		{
+			if (current.parent == null)
+				return false;
+			current = current.parent;
+			if (current == self)
+				return true;
+		}
+		return false;
+	}
 }

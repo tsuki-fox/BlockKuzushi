@@ -5,18 +5,18 @@ using System;
 
 public class BusUploader : MonoBehaviour
 {
-	[SerializeField,Header("衝突開始時")]
+	[SerializeField, Header("衝突開始時")]
 	List<TagName> _enter;
-	[SerializeField,Header("衝突中")]
+	[SerializeField, Header("衝突中")]
 	List<TagName> _stay;
-	[SerializeField,Header("衝突終了時")]
+	[SerializeField, Header("衝突終了時")]
 	List<TagName> _exit;
 	[SerializeField]
 	bool deathNotifiable = true;
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		foreach(var tag in _enter)
+		foreach (var tag in _enter)
 		{
 			if (collision.gameObject.GetEnumTagName() == tag)
 				GameEvents.Collisions.Notify(GameEvents.Declares.CollisionTiming.Enter, gameObject.GetEnumTagName(), tag, gameObject, collision.gameObject, collision);

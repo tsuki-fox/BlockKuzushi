@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public static class StringUtil
 {
+	/// <summary>有効なフォーマットかどうか</summary>
+	/// <param name="text"></param>
+	/// <returns></returns>
 	public static bool CheckValidFormat(string text)
 	{
 		const int Proc = 0;
@@ -47,5 +51,13 @@ public static class StringUtil
 			return false;
 
 		return true;
+	}
+
+	public static string GetPathWithoutExtension(string path)
+	{
+		var ext = Path.GetExtension(path);
+		if (string.IsNullOrEmpty(ext))
+			return path;
+		return path.Replace(ext, string.Empty);
 	}
 }

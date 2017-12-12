@@ -103,6 +103,13 @@ namespace GameEvents
 			else
 				_handlers.Add(key, (v1, v2, v3) => { });
 		}
+		/// <summary>
+		/// ハンドラを全て削除
+		/// </summary>
+		public static void Clean()
+		{
+			_handlers.Clear();
+		}
 	}
 
 	public static class Destroies
@@ -126,6 +133,10 @@ namespace GameEvents
 		{
 			if (_handlers.ContainsKey(name))
 				_handlers[name](self);
+		}
+		public static void Clean()
+		{
+			_handlers.Clear();
 		}
 	}
 }
