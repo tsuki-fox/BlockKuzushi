@@ -38,9 +38,6 @@ public class CollisionRules : MonoBehaviour
 
 	private void Awake()
 	{
-		ObjectPool.Reserve(_playerBulletSrc, 100);
-		ObjectPool.Reserve(_enemyBulletSrc, 100);
-
 		_audioSource = GetComponent<AudioSource>();
 		var go = gameObject;
 

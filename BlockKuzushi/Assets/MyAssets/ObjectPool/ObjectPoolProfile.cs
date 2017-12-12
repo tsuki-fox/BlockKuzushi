@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-[CreateAssetMenu(fileName ="NewProfile")]
+[CreateAssetMenu(fileName = "NewProfile")]
 public class ObjectPoolProfile : ScriptableObject
 {
 	[System.Serializable]
@@ -36,7 +36,7 @@ public class ObjectPoolProfile : ScriptableObject
 				var prefabRect = new Rect(position)
 				{
 					x = position.x + iconRect.width,
-					width=position.width-iconRect.width,
+					width = position.width - iconRect.width,
 					height = position.height * 0.5f
 				};
 				var amountRect = new Rect(prefabRect)
@@ -50,13 +50,13 @@ public class ObjectPoolProfile : ScriptableObject
 					EditorGUI.DrawTextureTransparent(iconRect, icon);
 				else
 					EditorGUI.LabelField(iconRect, "NULL");
-				prefabProp.objectReferenceValue = EditorGUI.ObjectField(prefabRect,"Prefab", prefabProp.objectReferenceValue, typeof(GameObject), false);
+				prefabProp.objectReferenceValue = EditorGUI.ObjectField(prefabRect, "Prefab", prefabProp.objectReferenceValue, typeof(GameObject), false);
 				EditorGUI.BeginDisabledGroup(prefabProp.objectReferenceValue == null);
 				EditorGUI.PropertyField(amountRect, amountProp);
 				EditorGUI.EndDisabledGroup();
 
 				EditorGUI.EndProperty();
-				if(EditorGUI.EndChangeCheck())
+				if (EditorGUI.EndChangeCheck())
 				{
 					if (prefabProp.objectReferenceValue != null)
 						property.FindPropertyRelative("_icon").objectReferenceValue = AssetPreview.GetMiniThumbnail(prefabProp.objectReferenceValue);
@@ -77,10 +77,13 @@ public class ObjectPoolProfile : ScriptableObject
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
 	static void ReserveOnLoad()
 	{
-		foreach(var entity in _entities)
+		foreach (var entity in _entities)
 		{
 			foreach (var prof in entity._profiles)
-				ObjectPool.Reserve(prof._prefab, prof._reserveAmount);
+			{
+				if (prof._prefab != null)
+					ObjectPool.Reserve(prof._prefab, prof._reserveAmount);
+			}
 		}
 	}
 
@@ -90,7 +93,7 @@ public class ObjectPoolProfile : ScriptableObject
 
 	void OnEnable()
 	{
-		_entities.Add(this);	
+		_entities.Add(this);
 	}
 
 	public void AddProfile()
@@ -100,7 +103,7 @@ public class ObjectPoolProfile : ScriptableObject
 
 #if UNITY_EDITOR
 	[CustomEditor(typeof(ObjectPoolProfile))]
-	public class ObjectPoolProfileInspector:Editor
+	public class ObjectPoolProfileInspector : Editor
 	{
 		public override void OnInspectorGUI()
 		{
