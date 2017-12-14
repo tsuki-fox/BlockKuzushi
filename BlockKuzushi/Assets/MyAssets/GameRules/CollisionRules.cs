@@ -5,6 +5,7 @@ using System.Linq;
 using UniRx;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using TF;
 
 public class CollisionRules : MonoBehaviour
 {

@@ -1,8 +1,8 @@
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
+/BlockKuzushi/[Ll]ibrary/
+/BlockKuzushi/[Tt]emp/
+/BlockKuzushi/[Oo]bj/
+/BlockKuzushi/[Bb]uild/
+/BlockKuzushi/[Bb]uilds/
 /Assets/AssetStoreTools*
 
 # Visual Studio 2015 cache directory
@@ -22,11 +22,6 @@ ExportedObj/
 *.booproj
 *.svd
 *.pdb
-
-# Unity Generated
-Temp/
-Obj/
-Library/
 
 # Unity3D generated meta files
 *.pidb.meta

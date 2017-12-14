@@ -81,7 +81,9 @@ public class BlockEmitter : MonoBehaviour
 
 	void DeleteAll()
 	{
+#if UNITY_EDITOR
 		EditorApplication.delayCall += () => DestroyImmediate(_blockRoot);
+#endif
 	}
 
 #if UNITY_EDITOR
