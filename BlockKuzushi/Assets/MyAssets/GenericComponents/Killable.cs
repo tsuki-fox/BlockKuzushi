@@ -18,7 +18,7 @@ public class Killable : MonoBehaviour
 
 	[SerializeField, Header("最大へルス")]
 	float _maxHealth = 100;
-	[Attachable]
+	[Extractable]
 	float _health;
 	[SerializeField, Header("踏ん張り有効化")]
 	bool _straddleEnabled = false;
@@ -30,7 +30,7 @@ public class Killable : MonoBehaviour
 		set { _maxHealth = value; }
 	}
 	/// <summary>現在ヘルス</summary>
-	[SerializeField,Attachable]
+	[SerializeField,Extractable]
 	public float health
 	{
 		get { return _health; }

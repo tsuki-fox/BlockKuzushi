@@ -12,7 +12,7 @@ public class LinearMover : MonoBehaviour
 {
 	[SerializeField, Header("速度")]
 	float _speed;
-	[SerializeField, Header("角度"),Attachable]
+	[SerializeField, Header("角度")]
 	float _eulerAngle;
 
 	Rigidbody2D _body;

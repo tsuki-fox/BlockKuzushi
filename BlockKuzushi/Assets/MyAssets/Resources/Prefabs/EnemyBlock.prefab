@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114890636195004504}
   - component: {fileID: 50476499357175030}
   - component: {fileID: 60946152359342334}
+  - component: {fileID: 114357865484441180}
   m_Layer: 12
   m_Name: EnemyBlock
   m_TagString: EnemyBlock
@@ -59,7 +60,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,6 +136,19 @@ PolygonCollider2D:
       - {x: -0.5877852, y: -0.80901706}
       - {x: 0.58778536, y: -0.80901694}
       - {x: 0.9510565, y: 0.30901712}
+--- !u!114 &114357865484441180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1891311779658912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75c85960ac9a7504485f46d893c314f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startColor: {r: 1, g: 1, b: 1, a: 1}
+  _endColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &114584139276636942
 MonoBehaviour:
   m_ObjectHideFlags: 1

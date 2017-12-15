@@ -10,7 +10,7 @@ using TF;
 public class CollisionRules : MonoBehaviour
 {
 	[SerializeField]
-	ParticleSystem _blockHitParticle;
+	GameObject _blockHitParticle;
 	[SerializeField]
 	GameObject _playerBulletSrc;
 	[SerializeField]
@@ -29,11 +29,13 @@ public class CollisionRules : MonoBehaviour
 
 	void CreateParticle(Vector3 pos,float duration)
 	{
-		var particle = Instantiate(_blockHitParticle);
+		//var particle = Instantiate(_blockHitParticle);
+		var particle = ObjectPool.Borrow(_blockHitParticle);
 		particle.transform.position = pos;
+
 		Observable.Timer(System.TimeSpan.FromSeconds(duration)).Subscribe(t =>
 		{
-			Destroy(particle.gameObject);
+			ObjectPool.Repay(particle);
 		}).AddTo(particle);
 	}
 

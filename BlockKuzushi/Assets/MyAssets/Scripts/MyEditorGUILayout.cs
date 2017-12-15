@@ -8,6 +8,9 @@ using System;
 using UnityEditor;
 #endif
 
+[AttributeUsage(AttributeTargets.Property|AttributeTargets.Field)]
+public class Extractable : Attribute { }
+
 #if UNITY_EDITOR
 public static class MyEditorGUILayout
 {

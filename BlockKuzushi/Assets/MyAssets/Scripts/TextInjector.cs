@@ -29,7 +29,7 @@ public class TextInjector : MonoBehaviour
 	[SerializeField, Multiline]
 	string _format = "";
 	[SerializeField]
-	List<Argument> _arguments;
+	List<Argument> _arguments = new List<Argument>();
 
 	[SerializeField]
 	Text _uiText;
@@ -44,31 +44,36 @@ public class TextInjector : MonoBehaviour
 		_uiText = GetComponent<Text>();
 	}
 
-	string GetValueString(System.Reflection.MemberInfo member, object instance)
+	object GetValue(System.Reflection.MemberInfo member, object instance)
 	{
 		var field = member as System.Reflection.FieldInfo;
 		var prop = member as System.Reflection.PropertyInfo;
 		if (field != null)
-			return field.GetValue(instance).ToString();
+			return field.GetValue(instance);
 		if (prop != null)
-			return prop.GetValue(instance, null).ToString();
+			return prop.GetValue(instance, null);
 		return "[ERROR]";
 	}
 
 	int GetArgCount()
 	{
-		if (!_format.Contains("{0}"))
-			return 0;
-
-		int i = 0;
-		while (i++ < 100)
+		int cnt = 0;
+		for (int i = 0; i < _format.Count(); i++)
 		{
-			string key = "{" + i.ToString() + "}";
-			if (!_format.Contains(key))
-				break;
+			if (_format[i] == '{')
+			{
+				for (int j = i+1; j < _format.Count(); j++)
+				{
+					if (_format[j] == '}')
+					{
+						++cnt;
+						i = j + 1;
+						break;
+					}
+				}
+			}
 		}
-
-		return i;
+		return cnt;
 	}
 
 	void Resize()
@@ -96,7 +101,7 @@ public class TextInjector : MonoBehaviour
 			return;
 		}
 
-		List<string> valueArgs = new List<string>();
+		List<object> valueArgs = new List<object>();
 		foreach (var arg in _arguments.Select((v, i) => new { v, i }))
 		{
 			if (arg.v.component != null)
@@ -105,7 +110,7 @@ public class TextInjector : MonoBehaviour
 				var member = cmp.GetType().GetMember(arg.v.propertyPath, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 				if (member.Length > 0)
 				{
-					string value = GetValueString(member[0], cmp);
+					object value = GetValue(member[0], cmp);
 					valueArgs.Add(value);
 				}
 				else
@@ -183,7 +188,7 @@ public class TextInjector : MonoBehaviour
 					arg.FindPropertyRelative(Argument.P_Component).objectReferenceValue =
 						MyEditorGUILayout.ComponentsPopupFromGameObject(component, instance);
 
-					MyEditorGUILayout.FieldsPopupFromComponent(ref index, ref path, component, null, typeof(Attachable));
+					MyEditorGUILayout.FieldsPopupFromComponent(ref index, ref path, component, null, typeof(Extractable));
 					arg.FindPropertyRelative(Argument.P_PropertyPath).stringValue = path;
 					arg.FindPropertyRelative(Argument.P_SelectedMemberIndex).intValue = index;
 

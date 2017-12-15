@@ -159,6 +159,7 @@ namespace TF
 				if (!item.activeSelf)
 				{
 					item.SetActive(true);
+					item.BroadcastMessage("OnBorrow", SendMessageOptions.DontRequireReceiver);
 					return item;
 				}
 			}
@@ -219,6 +220,8 @@ namespace TF
 				var self = target as ObjectPool;
 				serializedObject.Update();
 
+				EditorGUI.BeginChangeCheck();
+
 				//追加ボタン
 				if (GUILayout.Button("Add Profile"))
 					self.AddProfile();
@@ -242,6 +245,9 @@ namespace TF
 				foreach (var index in remIndexes)
 					profiles.DeleteArrayElementAtIndex(index);
 				serializedObject.ApplyModifiedProperties();
+
+				if(EditorGUI.EndChangeCheck())
+					Undo.RecordObject(this, "ObjectPoolInspector Changed");
 			}
 		}
 #endif

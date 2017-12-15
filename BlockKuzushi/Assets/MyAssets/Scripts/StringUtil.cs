@@ -10,6 +10,7 @@ public static class StringUtil
 	/// <returns></returns>
 	public static bool CheckValidFormat(string text)
 	{
+		return true;
 		const int Proc = 0;
 		const int Ready = 1;
 
