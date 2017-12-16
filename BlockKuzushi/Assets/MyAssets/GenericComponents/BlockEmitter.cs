@@ -86,6 +86,11 @@ public class BlockEmitter : MonoBehaviour
 #endif
 	}
 
+	void Start()
+	{
+		EmitAll();
+	}
+
 #if UNITY_EDITOR
 	[CustomEditor(typeof(BlockEmitter))]
 	public class BlockEmitterInspector : Editor

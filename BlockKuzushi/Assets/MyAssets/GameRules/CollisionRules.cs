@@ -62,7 +62,7 @@ public class CollisionRules : MonoBehaviour
 		GameEvents.Collisions.Subscribe(GameEvents.Declares.CollisionTiming.Enter, TagName.PlayerBlock, TagName.EnemyBullet, (playerBlocker, enemyBullet, collision) =>
 		{
 			MessageVisualizer.Write("hit!", enemyBullet.transform.position,Color.black);
-
+			Debug.Log("hit");
 			//PBullet生成
 			//var pBullet = Instantiate(_playerBulletSrc);
 			var pBullet = ObjectPool.Borrow(_playerBulletSrc);
@@ -105,9 +105,9 @@ public class CollisionRules : MonoBehaviour
 		{
 
 			//ダメージ処理
-			var damageable = enemy.GetComponent<Damageable>();
-			if (damageable)
-				damageable.TakeDamage(10);
+			var killable = enemy.GetComponent<Killable>();
+			if (killable)
+				killable.TakeDamage(10);
 
 			//エフェクト生成
 			CreateParticle(pBullet.transform.position, 2f);

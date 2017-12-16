@@ -15,6 +15,7 @@ public class BulletEmitter : MonoBehaviour
 	{
 		ConstantAngle,  //角度指定
 		ByObject,		//オブジェクト指定
+		ByName,			//オブジェクト名指定
 		Random,			//ランダム
 	}
 
@@ -29,6 +30,8 @@ public class BulletEmitter : MonoBehaviour
 	SpecifyType _specifyType;
 	[SerializeField,Header("ターゲットオブジェクト")]
 	GameObject _targetObject;
+	[SerializeField, Header("ターゲット名")]
+	string _targetName;
 	[SerializeField,Header("発射角度(固定)")]
 	float _constantAngle;
 	[SerializeField]
@@ -64,6 +67,10 @@ public class BulletEmitter : MonoBehaviour
 				direction = _targetObject.transform.position - transform.position;
 				direction.Normalize();
 				break;
+			case SpecifyType.ByName:
+				direction = _targetObject.transform.position - transform.position;
+				direction.Normalize();
+				break;
 			case SpecifyType.Random:
 				var angle = UnityEngine.Random.Range(_randomMin, _randomMax);
 				direction.x = Mathf.Cos(angle * Mathf.Deg2Rad);
@@ -88,6 +95,9 @@ public class BulletEmitter : MonoBehaviour
 			_emitCount++;
 			Emit();
 		}).AddTo(this);
+
+		if (_specifyType == SpecifyType.ByName)
+			_targetObject = GameObject.Find(_targetName);
 	}
 
 	void Update()
@@ -112,6 +122,7 @@ public class BulletEmitter : MonoBehaviour
 
 			float constantAngle = self._constantAngle;
 			GameObject targetObject = self._targetObject;
+			string targetName = self._targetName;
 			float randomMin = self._randomMin;
 			float randomMax = self._randomMax;
 
@@ -123,6 +134,9 @@ public class BulletEmitter : MonoBehaviour
 					break;
 				case SpecifyType.ByObject:
 					targetObject = (GameObject)EditorGUILayout.ObjectField("ターゲットオブジェクト", self._targetObject, typeof(GameObject), true);
+					break;
+				case SpecifyType.ByName:
+					targetName = EditorGUILayout.TextField(targetName);
 					break;
 				case SpecifyType.Random:
 					randomMin = EditorGUILayout.FloatField("最小値", self._randomMin);
@@ -156,6 +170,7 @@ public class BulletEmitter : MonoBehaviour
 				self._emittingLimit = emittingLimit;
 				self._startTime = startTime;
 				self._emitInterval = emitInterval;
+				self._targetName = targetName;
 			}
 			//base.OnInspectorGUI();
 		}

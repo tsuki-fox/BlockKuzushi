@@ -22,6 +22,8 @@ public class Killable : MonoBehaviour
 	float _health;
 	[SerializeField, Header("踏ん張り有効化")]
 	bool _straddleEnabled = false;
+	[SerializeField,Header("オブジェクトプールサポート有効化")]
+	bool _objectPoolSupport = false;
 
 	/// <summary>最大ヘルス</summary>
 	public float maxHealth
@@ -56,7 +58,12 @@ public class Killable : MonoBehaviour
 				onStraddle(this);
 			}
 			else
-				Destroy(gameObject);
+			{
+				if (_objectPoolSupport)
+					TF.ObjectPool.Repay(gameObject);
+				else
+					Destroy(gameObject);
+			}
 		}
 	}
 
