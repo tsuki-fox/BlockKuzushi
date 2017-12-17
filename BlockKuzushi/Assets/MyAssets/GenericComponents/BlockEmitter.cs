@@ -79,7 +79,7 @@ public class BlockEmitter : MonoBehaviour
 			EmitBlockRing(item);
 	}
 
-	void DeleteAll()
+	void DeleteAllOnEditor()
 	{
 #if UNITY_EDITOR
 		EditorApplication.delayCall += () => DestroyImmediate(_blockRoot);
@@ -89,6 +89,16 @@ public class BlockEmitter : MonoBehaviour
 	void Start()
 	{
 		EmitAll();
+	}
+
+	void OnBorrow()
+	{
+		EmitAll();
+	}
+
+	void OnRepay()
+	{
+		Destroy(_blockRoot);
 	}
 
 #if UNITY_EDITOR
@@ -102,7 +112,7 @@ public class BlockEmitter : MonoBehaviour
 			if (GUILayout.Button("ReEmitAll"))
 				self.EmitAll();
 			if (GUILayout.Button("DeleteAll"))
-				self.DeleteAll();
+				self.DeleteAllOnEditor();
 			base.OnInspectorGUI();
 		}
 	}

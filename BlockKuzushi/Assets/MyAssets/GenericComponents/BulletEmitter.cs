@@ -88,13 +88,15 @@ public class BulletEmitter : MonoBehaviour
 	{
 		Observable.Interval(TimeSpan.FromSeconds(_emitInterval)).Subscribe(_ =>
 		{
+			if (!gameObject.activeSelf)
+				return;
 			if (_elapsedTime < _startTime)
 				return;
 			if (_emitCount >= _emittingLimit && !_isUnlimitedEmitting)
 				return;
 			_emitCount++;
 			Emit();
-		}).AddTo(this);
+		}).AddTo(this.gameObject);
 
 		if (_specifyType == SpecifyType.ByName)
 			_targetObject = GameObject.Find(_targetName);
